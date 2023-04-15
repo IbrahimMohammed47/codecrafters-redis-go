@@ -37,16 +37,19 @@ func main() {
 
 func handleConnection(con net.Conn) {
 	// var msg []byte
-	msg := make([]byte, 1024)
-	_, err := con.Read(msg)
-	if err != nil {
-		fmt.Println("Error reading msg: ", err.Error())
-		return
+	for {
+		msg := make([]byte, 1024)
+		_, err := con.Read(msg)
+		if err != nil {
+			// fmt.Println("Error reading msg: ", err.Error())
+			break
+		}
+		res := "PONG"
+		respRes := resp.NewString(res)
+		writer := bufio.NewWriter(con)
+		resp.Encode(writer, respRes)
+		writer.Flush()
+
 	}
-	res := "PONG"
-	respRes := resp.NewString(res)
-	writer := bufio.NewWriter(con)
-	resp.Encode(writer, respRes)
-	writer.Flush()
 
 }
