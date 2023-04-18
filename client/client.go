@@ -11,6 +11,7 @@ func main() {
 		fmt.Println(1, err)
 		// handle error
 	}
+	defer conn.Close()
 	msg := "PING"
 	conn.Write([]byte(msg))
 
