@@ -51,6 +51,7 @@ type Resp interface {
 	Type() RespType
 }
 
+// strings
 type String struct {
 	Value string
 }
@@ -63,6 +64,20 @@ func (r *String) Type() RespType {
 	return TypeString
 }
 
+// ints
+type Int struct {
+	Value int64
+}
+
+func NewInt(n int64) *Int {
+	return &Int{n}
+}
+
+func (r *Int) Type() RespType {
+	return TypeInt
+}
+
+// errors
 type Error struct {
 	Value string
 }
@@ -79,18 +94,7 @@ func (r *Error) Type() RespType {
 	return TypeError
 }
 
-type Int struct {
-	Value int64
-}
-
-func NewInt(n int64) *Int {
-	return &Int{n}
-}
-
-func (r *Int) Type() RespType {
-	return TypeInt
-}
-
+// byteArrays
 type BulkBytes struct {
 	Value []byte
 }
@@ -107,6 +111,7 @@ func (r *BulkBytes) Type() RespType {
 	return TypeBulkBytes
 }
 
+// resp arrays
 type Array struct {
 	Value []Resp
 }
@@ -139,6 +144,7 @@ func (r *Array) AppendError(err error) {
 	r.Append(NewError(err))
 }
 
+// pings
 type Ping byte
 
 func NewPing() Ping {

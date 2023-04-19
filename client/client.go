@@ -12,14 +12,16 @@ func main() {
 		// handle error
 	}
 	defer conn.Close()
-	msg := "PING"
+	msg := "*2\r\n$4\r\nECHO\r\n$3\r\nhey\r\n"
 	conn.Write([]byte(msg))
 
 	rcvdMsg := make([]byte, 1024)
 	conn.Read(rcvdMsg)
 	fmt.Println(string(rcvdMsg))
 
-	msg2 := "PING"
+	// msg2 := "*1\r\n$4\r\nPING\r\n"
+	// msg2 := "PING"
+	msg2 := "*1\r\n$4\r\nPING\r\n"
 	conn.Write([]byte(msg2))
 
 	rcvdMsg2 := make([]byte, 1024)
