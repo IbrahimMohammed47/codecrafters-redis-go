@@ -6,22 +6,12 @@ import (
 	"net"
 	"os"
 
-	// Uncomment this block to pass the first stage
-	// "net"
-	// "os"
-
 	"github.com/IbrahimMohammed47/codecrafters-redis-go/commands"
 	"github.com/IbrahimMohammed47/codecrafters-redis-go/resp"
 )
 
 func main() {
 
-	// fmt.Println(y)
-	// respRes2 := resp.NewString("Hello")
-	// fmt.Println(respRes2.Type())
-	// fmt.Println(respRes2.Value)
-	// return
-	// Uncomment this block to pass the first stage
 	l, err := net.Listen("tcp", "0.0.0.0:6379")
 	if err != nil {
 		fmt.Println("Failed to bind to port 6379")
