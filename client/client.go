@@ -26,19 +26,26 @@ func main() {
 	conn.Read(rcvdMsg2)
 	fmt.Println(string(rcvdMsg2))
 
-	msg3 := "*3\r\n$3\r\nSET\r\n+num\r\n:7\r\n"
-	conn.Write([]byte(msg3))
+	// msg3 := "*3\r\n$3\r\nSET\r\n+num\r\n:7\r\n"
+	// conn.Write([]byte(msg3))
 
-	rcvdMsg3 := make([]byte, 1024)
-	conn.Read(rcvdMsg3)
-	fmt.Println(string(rcvdMsg3))
+	// rcvdMsg3 := make([]byte, 1024)
+	// conn.Read(rcvdMsg3)
+	// fmt.Println(string(rcvdMsg3))
 
-	msg4 := "*2\r\n$3\r\nGET\r\n+num\r\n"
-	conn.Write([]byte(msg4))
+	// msg3 := "*5\r\n$3\r\nSET\r\n+num\r\n:7\r\n$2\r\nPX\r\n$3\r\n100\r\n"
+	// conn.Write([]byte(msg3))
 
-	rcvdMsg4 := make([]byte, 1024)
-	conn.Read(rcvdMsg4)
-	fmt.Println(string(rcvdMsg4))
+	// rcvdMsg3 := make([]byte, 1024)
+	// conn.Read(rcvdMsg3)
+	// fmt.Println(string(rcvdMsg3))
+
+	// msg4 := "*2\r\n$3\r\nGET\r\n+num\r\n"
+	// conn.Write([]byte(msg4))
+
+	// rcvdMsg4 := make([]byte, 1024)
+	// conn.Read(rcvdMsg4)
+	// fmt.Println(string(rcvdMsg4))
 
 	// status, err := bufio.NewReader(conn).ReadString('\n')
 	// if err != nil {

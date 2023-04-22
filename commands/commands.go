@@ -1,7 +1,9 @@
 package commands
 
 import (
+	"strconv"
 	"strings"
+	"time"
 
 	"github.com/IbrahimMohammed47/codecrafters-redis-go/resp"
 )
@@ -44,7 +46,7 @@ func PingCommand() resp.Resp {
 }
 
 func SetCommand(db map[string]resp.Resp, args []resp.Resp) resp.Resp {
-	if len(args) != 2 {
+	if len(args) != 2 && len(args) != 4 {
 		return resp.NewErrorWithString("invalid arguments count for SET")
 	}
 	var key string
@@ -55,6 +57,21 @@ func SetCommand(db map[string]resp.Resp, args []resp.Resp) resp.Resp {
 		key = v.Value
 	case *resp.BulkBytes:
 		key = string(v.Value)
+	}
+	if len(args) == 4 {
+		px, ok := args[2].(*resp.BulkBytes)
+		if !ok || strings.ToUpper(string(px.Value)) != "PX" {
+			return resp.NewErrorWithString("invalid option for SET")
+		}
+		ttlStr, ok := args[3].(*resp.BulkBytes)
+		if !ok {
+			return resp.NewErrorWithString("invalid ttl value for PX option")
+		}
+		ttl, _ := strconv.Atoi(string(ttlStr.Value))
+		go func() {
+			<-time.After(time.Duration(ttl) * time.Millisecond)
+			delete(database, key)
+		}()
 	}
 	db[key] = args[1]
 	return resp.NewString("OK")
@@ -73,5 +90,9 @@ func GetCommand(db map[string]resp.Resp, args []resp.Resp) resp.Resp {
 	case *resp.BulkBytes:
 		key = string(v.Value)
 	}
-	return db[key]
+	val, ok := db[key]
+	if !ok {
+		return resp.NewBulkBytes(nil)
+	}
+	return val
 }
